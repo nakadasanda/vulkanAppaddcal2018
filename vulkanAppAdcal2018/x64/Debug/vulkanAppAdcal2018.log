@@ -1,3 +1,2 @@
 ﻿  Renderer.cpp
-c:\users\root\source\repos\vulkanappadcal2018\vulkanappadcal2018\renderer.cpp(70): warning C4102: 'std': unreferenced label
   vulkanAppAdcal2018.vcxproj -> C:\Users\root\source\repos\vulkanAppAdcal2018\x64\Debug\vulkanAppAdcal2018.exe
