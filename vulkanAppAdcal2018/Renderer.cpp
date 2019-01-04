@@ -73,9 +73,49 @@ void Renderer::_InitInstance()
 	application_info.applicationVersion = VK_MAKE_VERSION(0, 1, 0);
 	application_info.pApplicationName = "VulkanAppAdcal2018";
 
+	uint32_t layer_count = 0;
+	vkEnumerateInstanceLayerProperties(&layer_count, nullptr);
+	std::vector<VkLayerProperties> layers(layer_count);
+	vkEnumerateInstanceLayerProperties(&layer_count, layers.data());
+
+	std::cout << "Amount of Layers " << layer_count << std::endl;
+	for (int i = 0; i < layer_count; i++) {
+		std::cout << std::endl;
+		std::cout << "layerName:            " << layers[i].layerName << std::endl;
+		std::cout << "specVersion:          " << layers[i].specVersion << std::endl;
+		std::cout << "implementationVersion:" << layers[i].implementationVersion << std::endl;
+		std::cout << "description:          " << layers[i].description << std::endl;
+	}
+
+	uint32_t extensions_count = 0;
+	vkEnumerateInstanceExtensionProperties(nullptr, &extensions_count, nullptr);
+	std::vector<VkExtensionProperties> extensions(extensions_count);
+	vkEnumerateInstanceExtensionProperties(nullptr, &extensions_count, extensions.data());
+
+	std::cout << std::endl;
+	std::cout << "Amount of Extensions " << extensions_count << std::endl;
+	for (int i = 0; i < extensions_count; i++) {
+		std::cout << std::endl;
+		std::cout << "Name:        " << extensions[i].extensionName<< std::endl;
+		std::cout << "specVersion: " << extensions[i].specVersion << std::endl;
+		
+	}
+
+	const std::vector<const char*>validationLayers = {
+		"VK_LAYER_LUNARG_standard_validation"
+	};
+
 	VkInstanceCreateInfo instance_create_info{};
 	instance_create_info.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
+	instance_create_info.pNext = nullptr;
+	instance_create_info.flags = 0;
 	instance_create_info.pApplicationInfo = &application_info;
+	instance_create_info.enabledExtensionCount = validationLayers.size();
+	instance_create_info.ppEnabledLayerNames = validationLayers.data();
+	instance_create_info.enabledExtensionCount = 0;
+	instance_create_info.ppEnabledExtensionNames = nullptr;
+
+
 	auto err = vkCreateInstance(&instance_create_info, nullptr, &_instance);
 	if (VK_SUCCESS != err) {
 		assert(0 && "Vulkan ERROR: Create instance failed!!");
@@ -100,7 +140,7 @@ void Renderer::_InitDevise()
 	vkEnumeratePhysicalDevices(_instance, &gpu_count, gpu_list.data());
 	_gpu = gpu_list[0]; // TODO Choose best Device;
 
-	float queue_priorities[]{ 1.0f };
+	float queue_priorities[]{ 1.0f};
 	VkDeviceQueueCreateInfo device_queue_create_info{};
 	device_queue_create_info.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
 	device_queue_create_info.queueFamilyIndex = 0;// TODO Choose correct family index
