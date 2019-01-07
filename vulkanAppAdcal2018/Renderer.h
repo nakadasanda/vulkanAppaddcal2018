@@ -17,7 +17,7 @@ private:
 
 	VkInstance	_instance = nullptr;
 	VkPhysicalDevice _gpu = nullptr;
-	VkDevice	_devise = nullptr;
+	VkDevice	_device = nullptr;
 	VkPhysicalDeviceProperties _gpu_property = {};
 	
 	uint32_t _graphics_family_index=0;

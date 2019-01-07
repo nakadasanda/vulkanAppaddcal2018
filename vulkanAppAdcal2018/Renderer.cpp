@@ -144,23 +144,28 @@ void Renderer::_InitDevise()
 	VkDeviceQueueCreateInfo device_queue_create_info{};
 	device_queue_create_info.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
 	device_queue_create_info.queueFamilyIndex = 0;// TODO Choose correct family index
-	device_queue_create_info.queueCount = 4; // TODO  Check if this amount is valid
+	device_queue_create_info.queueCount = 1; // TODO  Check if this amount is valid
 	device_queue_create_info.pQueuePriorities = queue_priorities;
 
 	VkDeviceCreateInfo device_create_info{};
 	device_create_info.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
 	device_create_info.queueCreateInfoCount = 1;
 	device_create_info.pQueueCreateInfos = &device_queue_create_info;
-	auto err = vkCreateDevice(_gpu, &device_create_info, nullptr, &_devise);
+	auto err = vkCreateDevice(_gpu, &device_create_info, nullptr, &_device);
 	if (VK_SUCCESS != err) {
 		assert(0 && "Vulkan Err :Device Create failed");
 		std::exit(-1);
 	}
 	printDeviceStatus(_gpu);
+
+	vkDeviceWaitIdle(_device);
+	VkQueue queue;
+	vkGetDeviceQueue(_device, 0, 0, &queue);
+
 }
 
 void Renderer::_DeInitDevice()
 {
-	vkDestroyDevice(_devise, nullptr);
-	_devise = nullptr;
+	vkDestroyDevice(_device, nullptr);
+	_device = nullptr;
 }
