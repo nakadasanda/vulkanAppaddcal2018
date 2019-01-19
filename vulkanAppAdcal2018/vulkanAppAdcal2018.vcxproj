@@ -71,12 +71,12 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ExecutablePath>$(ExecutablePath)</ExecutablePath>
-    <IncludePath>C:\VulkanSDK\1.0.68.0\Include\vulkan;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\VulkanSDK\1.0.68.0\Bin;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\VulkanSDK\1.1.82.1\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\VulkanSDK\1.1.82.1\Bin;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\VulkanSDK\1.0.68.0\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\VulkanSDK\1.0.68.0\Bin;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\opengl\glfw-3.2.1.bin.WIN64\include;C:\opengl\glew-2.1.0\include;C:\VulkanSDK\1.1.82.1\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\VulkanSDK\1.1.82.1\Bin;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -86,7 +86,7 @@
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>C:\VulkanSDK\1.0.68.0\Lib\vulkan-1.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>C:\VulkanSDK\1.1.82.1\Lib\vulkan-1.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -95,9 +95,11 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>C:\VulkanSDK\1.0.68.0\Lib\vulkan-1.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>C:\VulkanSDK\1.1.82.1\Lib\vulkan-1.lib;C:\opengl\glew-2.1.0\lib\Release\x64\glew32s.lib;C:\opengl\glfw-3.2.1.bin.WIN64\lib-vc2015\glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\opengl\glfw-3.2.1.bin.WIN64\lib-vc2015;C:\opengl\glew-2.1.0\lib\Release\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -131,9 +133,13 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="Window.cpp" />
+    <ClCompile Include="Window_GLFW.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Platform.h" />
     <ClInclude Include="Renderer.h" />
+    <ClInclude Include="Window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

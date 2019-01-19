@@ -1,10 +1,13 @@
+#include "Platform.h"
+
 #include "Renderer.h"
+#include "Window.h"
 #include <iostream>
-#include  <cstdlib>
+#include <cstdlib>
 #include <assert.h>
 #include <vector>
 #include <sstream>
-#include <Windows.h>
+
 
 
 Renderer::Renderer()
@@ -18,8 +21,23 @@ Renderer::~Renderer()
 {
 	_DeInitDevice();
 	_DeInitInstance();
-
+	
 	system("pause");
+}
+
+Window * Renderer::OpenWindow(uint32_t size_x, uint32_t size_y, std::string name)
+{
+	_window = new Window(size_x, size_y, name);
+	return _window;
+}
+
+bool Renderer::Run()
+{
+	if (nullptr != _window) {
+		return _window->Update();
+	}
+	return true;
+	
 }
 
 void printDeviceStatus(VkPhysicalDevice &gpu) {
@@ -75,7 +93,9 @@ void Renderer::_InitInstance()
 
 	uint32_t layer_count = 0;
 	vkEnumerateInstanceLayerProperties(&layer_count, nullptr);
+	
 	std::vector<VkLayerProperties> layers(layer_count);
+
 	vkEnumerateInstanceLayerProperties(&layer_count, layers.data());
 
 	std::cout << "Amount of Layers " << layer_count << std::endl;
@@ -105,6 +125,7 @@ void Renderer::_InitInstance()
 		"VK_LAYER_LUNARG_standard_validation"
 	};
 
+
 	VkInstanceCreateInfo instance_create_info{};
 	instance_create_info.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
 	instance_create_info.pNext = nullptr;
@@ -114,6 +135,8 @@ void Renderer::_InitInstance()
 	instance_create_info.ppEnabledLayerNames = validationLayers.data();
 	instance_create_info.enabledExtensionCount = 0;
 	instance_create_info.ppEnabledExtensionNames = nullptr;
+	//instance_create_info.enabledExtensionCount = usedExtensions.size();
+	//instance_create_info.ppEnabledExtensionNames = usedExtensions.data();
 
 
 	auto err = vkCreateInstance(&instance_create_info, nullptr, &_instance);
@@ -151,6 +174,8 @@ void Renderer::_InitDevise()
 	device_create_info.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
 	device_create_info.queueCreateInfoCount = 1;
 	device_create_info.pQueueCreateInfos = &device_queue_create_info;
+
+
 	auto err = vkCreateDevice(_gpu, &device_create_info, nullptr, &_device);
 	if (VK_SUCCESS != err) {
 		assert(0 && "Vulkan Err :Device Create failed");

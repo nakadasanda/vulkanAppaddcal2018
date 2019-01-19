@@ -1,6 +1,8 @@
 #pragma once
-#include <vulkan\vulkan.h>
+#include <vulkan/vulkan.h>
 #include <vector>
+
+class Window;
 
 class Renderer
 {
@@ -8,7 +10,11 @@ public:
 	Renderer();
 	~Renderer();
 
-private:
+	Window * OpenWindow(uint32_t size_x,uint32_t size_y,std::string name);
+
+	bool Run();
+
+//private:
 	void _InitInstance();
 	void _DeInitInstance();
 
@@ -20,7 +26,7 @@ private:
 	VkDevice	_device = nullptr;
 	VkPhysicalDeviceProperties _gpu_property = {};
 	
-	uint32_t _graphics_family_index=0;
+	Window *_window = nullptr;
 
 };
 

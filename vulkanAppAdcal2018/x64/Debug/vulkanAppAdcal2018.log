@@ -1,5 +1,10 @@
-﻿  Renderer.cpp
-c:\users\root\source\repos\vulkanappadcal2018\vulkanappadcal2018\renderer.cpp(82): warning C4018: '<': signed/unsigned mismatch
-c:\users\root\source\repos\vulkanappadcal2018\vulkanappadcal2018\renderer.cpp(97): warning C4018: '<': signed/unsigned mismatch
-c:\users\root\source\repos\vulkanappadcal2018\vulkanappadcal2018\renderer.cpp(113): warning C4267: '=': conversion from 'size_t' to 'uint32_t', possible loss of data
+﻿  Window_GLFW.cpp
+c:\users\root\source\repos\vulkanappadcal2018\vulkanappadcal2018\window.h(32): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+c:\users\root\source\repos\vulkanappadcal2018\vulkanappadcal2018\window_glfw.cpp(7): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  Renderer.cpp
+c:\users\root\source\repos\vulkanappadcal2018\vulkanappadcal2018\window.h(32): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+c:\users\root\source\repos\vulkanappadcal2018\vulkanappadcal2018\renderer.cpp(102): warning C4018: '<': signed/unsigned mismatch
+c:\users\root\source\repos\vulkanappadcal2018\vulkanappadcal2018\renderer.cpp(117): warning C4018: '<': signed/unsigned mismatch
+c:\users\root\source\repos\vulkanappadcal2018\vulkanappadcal2018\renderer.cpp(134): warning C4267: '=': conversion from 'size_t' to 'uint32_t', possible loss of data
+  Generating Code...
   vulkanAppAdcal2018.vcxproj -> C:\Users\root\source\repos\vulkanAppAdcal2018\x64\Debug\vulkanAppAdcal2018.exe
