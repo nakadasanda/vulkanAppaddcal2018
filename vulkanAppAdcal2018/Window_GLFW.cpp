@@ -4,9 +4,9 @@
 #include <assert.h>
 
 
-#if VK_USE_PLATFORM_WIN32_KHR
+#if GLFW_INCLUDE_VULKAN
 
-void Window::_InitWindow() 
+void Window::_InitOSWindow() 
 {
 	glfwInit();
 	glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
@@ -14,16 +14,22 @@ void Window::_InitWindow()
 
 }
 
-void Window::_DeInitWindow()
+void Window::_DeInitOSWindow()
 {
 	glfwDestroyWindow(_GLFW_window);
 }
 
-void Window::_UpdateWindow()
+void Window::_UpdateOSWindow()
 {
-	while (true){
 		glfwPollEvents();
-	};
+		if (glfwWindowShouldClose(_GLFW_window)){
+			Close();
+		}
+}
+
+void Window::_InitOSSurface()
+{
+	glfwCreateWindowSurface(_renderer->GetVulkanInstance(), _GLFW_window, nullptr, &_surface);
 }
 
 #endif

@@ -14,7 +14,15 @@ public:
 
 	bool Run();
 
-//private:
+	const VkInstance	GetVulkanInstance();
+	const VkPhysicalDevice	GetVulkanPhysicalDevice();
+	const VkDevice	GetVulkanDevice();
+	const VkQueue	GetVulkanQueue();
+	const uint32_t	GetVulkanQueueFamilyIndex();
+	const VkPhysicalDeviceProperties	& GetVulkanPhysicalDeviceProperties();
+
+private:
+	void _SetupLayersAndExtensions();
 	void _InitInstance();
 	void _DeInitInstance();
 
@@ -25,8 +33,14 @@ public:
 	VkPhysicalDevice _gpu = nullptr;
 	VkDevice	_device = nullptr;
 	VkPhysicalDeviceProperties _gpu_property = {};
-	
+	VkQueue _queue;
+	uint32_t _graphics_family_index = 0;
+
 	Window *_window = nullptr;
 
+	std::vector<const char*>	_instance_layers;
+	std::vector<const char*>	_instance_extensions;
+	std::vector<const char*>	_device_layers;
+	std::vector<const char*>	_device_extensions;
 };
 

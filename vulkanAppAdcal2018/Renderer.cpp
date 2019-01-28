@@ -12,6 +12,7 @@
 
 Renderer::Renderer()
 {
+	_SetupLayersAndExtensions();
 	_InitInstance();
 	_InitDevise();
 }
@@ -21,13 +22,11 @@ Renderer::~Renderer()
 {
 	_DeInitDevice();
 	_DeInitInstance();
-	
-	system("pause");
 }
 
 Window * Renderer::OpenWindow(uint32_t size_x, uint32_t size_y, std::string name)
 {
-	_window = new Window(size_x, size_y, name);
+	_window = new Window(this,size_x, size_y, name);
 	return _window;
 }
 
@@ -38,6 +37,41 @@ bool Renderer::Run()
 	}
 	return true;
 	
+}
+
+const VkInstance Renderer::GetVulkanInstance()
+{
+	return _instance;
+}
+
+const VkPhysicalDevice Renderer::GetVulkanPhysicalDevice()
+{
+	return _gpu;
+}
+
+const VkDevice Renderer::GetVulkanDevice()
+{
+	return _device;
+}
+
+const VkQueue Renderer::GetVulkanQueue()
+{
+	return _queue;
+}
+
+const uint32_t Renderer::GetVulkanQueueFamilyIndex()
+{
+	return _graphics_family_index;
+}
+
+const VkPhysicalDeviceProperties & Renderer::GetVulkanPhysicalDeviceProperties()
+{
+	return VkPhysicalDeviceProperties();
+}
+void Renderer::_SetupLayersAndExtensions()
+{
+	_instance_extensions.push_back(VK_KHR_SURFACE_EXTENSION_NAME);
+	_instance_extensions.push_back(VK_KHR_WIN32_SURFACE_EXTENSION_NAME);
 }
 
 void printDeviceStatus(VkPhysicalDevice &gpu) {
@@ -82,6 +116,8 @@ void printDeviceStatus(VkPhysicalDevice &gpu) {
 
 	std::cout << std::endl;
 }
+
+
 
 void Renderer::_InitInstance()
 {
@@ -133,8 +169,8 @@ void Renderer::_InitInstance()
 	instance_create_info.pApplicationInfo = &application_info;
 	instance_create_info.enabledExtensionCount = validationLayers.size();
 	instance_create_info.ppEnabledLayerNames = validationLayers.data();
-	instance_create_info.enabledExtensionCount = 0;
-	instance_create_info.ppEnabledExtensionNames = nullptr;
+	instance_create_info.enabledExtensionCount = _instance_extensions.size();
+	instance_create_info.ppEnabledExtensionNames = _instance_extensions.data();
 	//instance_create_info.enabledExtensionCount = usedExtensions.size();
 	//instance_create_info.ppEnabledExtensionNames = usedExtensions.data();
 
@@ -184,8 +220,8 @@ void Renderer::_InitDevise()
 	printDeviceStatus(_gpu);
 
 	vkDeviceWaitIdle(_device);
-	VkQueue queue;
-	vkGetDeviceQueue(_device, 0, 0, &queue);
+	
+	vkGetDeviceQueue(_device, 0, 0, &_queue);
 
 }
 
@@ -193,4 +229,5 @@ void Renderer::_DeInitDevice()
 {
 	vkDestroyDevice(_device, nullptr);
 	_device = nullptr;
+
 }
