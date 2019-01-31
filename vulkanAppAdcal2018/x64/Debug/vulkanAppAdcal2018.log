@@ -1,9 +1,4 @@
-﻿  Renderer.cpp
+﻿  Window.cpp
 c:\users\root\source\repos\vulkanappadcal2018\vulkanappadcal2018\window.h(41): warning C4067: unexpected tokens following preprocessor directive - expected a newline
 c:\users\root\source\repos\vulkanappadcal2018\vulkanappadcal2018\window.h(47): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-c:\users\root\source\repos\vulkanappadcal2018\vulkanappadcal2018\renderer.cpp(138): warning C4018: '<': signed/unsigned mismatch
-c:\users\root\source\repos\vulkanappadcal2018\vulkanappadcal2018\renderer.cpp(153): warning C4018: '<': signed/unsigned mismatch
-c:\users\root\source\repos\vulkanappadcal2018\vulkanappadcal2018\renderer.cpp(170): warning C4267: '=': conversion from 'size_t' to 'uint32_t', possible loss of data
-c:\users\root\source\repos\vulkanappadcal2018\vulkanappadcal2018\renderer.cpp(172): warning C4267: '=': conversion from 'size_t' to 'uint32_t', possible loss of data
-c:\users\root\source\repos\vulkanappadcal2018\vulkanappadcal2018\renderer.cpp(69): warning C4172: returning address of local variable or temporary
   vulkanAppAdcal2018.vcxproj -> C:\Users\root\source\repos\vulkanAppAdcal2018\x64\Debug\vulkanAppAdcal2018.exe
