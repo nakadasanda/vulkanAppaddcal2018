@@ -74,6 +74,7 @@ void Renderer::_SetupLayersAndExtensions()
 
 	_instance_extensions.push_back(VK_KHR_SURFACE_EXTENSION_NAME);
 	_instance_extensions.push_back(VK_KHR_WIN32_SURFACE_EXTENSION_NAME);
+	_device_extensions.push_back(VK_KHR_SWAPCHAIN_EXTENSION_NAME);
 }
 
 void printDeviceStatus(VkPhysicalDevice &gpu) {
@@ -161,6 +162,8 @@ void printDeviceStatus(VkPhysicalDevice &gpu) {
 		std::cout << "description:          " << layers[i].description << std::endl;
 	}
 
+
+
 	std::cout << std::endl;
 }
 
@@ -215,6 +218,8 @@ void Renderer::_InitDevise()
 	device_create_info.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
 	device_create_info.queueCreateInfoCount = 1;
 	device_create_info.pQueueCreateInfos = &device_queue_create_info;
+	device_create_info.enabledExtensionCount = _device_extensions.size();
+	device_create_info.ppEnabledExtensionNames = _device_extensions.data();
 
 
 	auto err = vkCreateDevice(_gpu, &device_create_info, nullptr, &_device);

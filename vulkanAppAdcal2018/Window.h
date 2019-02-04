@@ -24,12 +24,19 @@ private:
 
 	void _InitSurface();
 	void _DeInitSurface();
+	void _InitSwapchain();
+	void _DeInitSwapchain();
+
+
 	Renderer * _renderer = nullptr;
 
 	VkSurfaceKHR _surface = VK_NULL_HANDLE;
+	VkSwapchainKHR _swapchain = VK_NULL_HANDLE;
+
 	uint32_t	_surface_size_x = 520;
 	uint32_t	_surface_size_y = 520;
 	std::string _window_name;
+	uint32_t _swapchain_image_count = 2;
 
 	GLFWwindow *_GLFW_window;
 

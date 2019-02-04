@@ -1,4 +1,6 @@
 ﻿  Window.cpp
-c:\users\root\source\repos\vulkanappadcal2018\vulkanappadcal2018\window.h(41): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-c:\users\root\source\repos\vulkanappadcal2018\vulkanappadcal2018\window.h(47): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+c:\users\root\source\repos\vulkanappadcal2018\vulkanappadcal2018\window.h(48): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+c:\users\root\source\repos\vulkanappadcal2018\vulkanappadcal2018\window.h(54): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+c:\users\root\source\repos\vulkanappadcal2018\vulkanappadcal2018\window.cpp(67): warning C4018: '<': signed/unsigned mismatch
+c:\users\root\source\repos\vulkanappadcal2018\vulkanappadcal2018\window.cpp(95): warning C4018: '<': signed/unsigned mismatch
   vulkanAppAdcal2018.vcxproj -> C:\Users\root\source\repos\vulkanAppAdcal2018\x64\Debug\vulkanAppAdcal2018.exe
