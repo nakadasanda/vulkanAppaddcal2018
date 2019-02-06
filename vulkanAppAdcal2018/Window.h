@@ -24,9 +24,12 @@ private:
 
 	void _InitSurface();
 	void _DeInitSurface();
+
 	void _InitSwapchain();
 	void _DeInitSwapchain();
 
+	void _InitSwapchainImages();
+	void _DeInitSwapchainImages();
 
 	Renderer * _renderer = nullptr;
 
@@ -42,6 +45,9 @@ private:
 
 	VkSurfaceFormatKHR _surface_format = {};
 	VkSurfaceCapabilitiesKHR _surface_capabilities = {};
+
+	std::vector<VkImage> _swapchain_Image;
+	std::vector<VkImageView> _swapchain_image_view;
 	
 	bool _window_should_run = true;
 

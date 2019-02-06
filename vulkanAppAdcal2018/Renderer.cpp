@@ -222,11 +222,8 @@ void Renderer::_InitDevise()
 	device_create_info.ppEnabledExtensionNames = _device_extensions.data();
 
 
-	auto err = vkCreateDevice(_gpu, &device_create_info, nullptr, &_device);
-	if (VK_SUCCESS != err) {
-		assert(0 && "Vulkan Err :Device Create failed");
-		std::exit(-1);
-	}
+	vkCreateDevice(_gpu, &device_create_info, nullptr, &_device);
+
 	printDeviceStatus(_gpu);
 
 	vkDeviceWaitIdle(_device);

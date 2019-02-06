@@ -9,17 +9,19 @@ Window::Window(Renderer * renderer, uint32_t size_x, uint32_t size_y, std::strin
 	_surface_size_x = size_x;
 	_surface_size_x = size_y;
 	_window_name = name;
+
 	_InitOSWindow();
 	_InitSurface();
 	_InitSwapchain();
+//	_InitSwapchainImages();
 }
 
 
 
 Window::~Window()
 {
+//	_DeInitSwapchainImages();
 	_DeInitSwapchain();
-
 	_DeInitSurface();
 	_DeInitOSWindow();
 
@@ -41,8 +43,6 @@ void Window::_InitSurface()
 	_InitOSSurface();
 	
 	auto gpu = _renderer->GetVulkanPhysicalDevice();
-	VkBool32 WSI_supported = false;
-	vkGetPhysicalDeviceSurfaceSupportKHR(gpu, _renderer->GetVulkanQueueFamilyIndex(), _surface, &WSI_supported);
 	
 	std::cout << std::endl;
 	std::cout << "DeviceSurfaceCapabilities" << std::endl;
@@ -83,7 +83,7 @@ void Window::_DeInitSurface()
 void Window::_InitSwapchain()
 {
 	if (_swapchain_image_count > _surface_capabilities.maxImageCount) _swapchain_image_count = _surface_capabilities.maxImageCount;
-	if (_swapchain_image_count < _surface_capabilities.minImageCount + 1) _swapchain_image_count = _surface_capabilities.minImageCount + 1;
+
 
 	VkPresentModeKHR present_mode = VK_PRESENT_MODE_FIFO_KHR;
 	{
@@ -124,10 +124,11 @@ void Window::_InitSwapchain()
 	swapchain_create_info.preTransform = VK_SURFACE_TRANSFORM_IDENTITY_BIT_KHR;
 	swapchain_create_info.compositeAlpha = VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR;
 	swapchain_create_info.presentMode = VK_PRESENT_MODE_FIFO_KHR;
-	swapchain_create_info.clipped =VK_TRUE;
+	swapchain_create_info.clipped = VK_TRUE;
 	swapchain_create_info.oldSwapchain = VK_NULL_HANDLE;
 	
-	vkCreateSwapchainKHR(_renderer->GetVulkanDevice(),&swapchain_create_info,nullptr,&_swapchain);
+	 vkCreateSwapchainKHR(_renderer->GetVulkanDevice(),&swapchain_create_info,nullptr,&_swapchain);
+
 	
 }
 
@@ -135,4 +136,42 @@ void Window::_InitSwapchain()
 void Window::_DeInitSwapchain()
 {
 	vkDestroySwapchainKHR(_renderer->GetVulkanDevice(), _swapchain ,nullptr);
+}
+
+void Window::_InitSwapchainImages()
+{
+	_swapchain_Image.resize(_swapchain_image_count);
+	_swapchain_image_view.resize(_swapchain_image_count);
+	vkGetSwapchainImagesKHR(_renderer->GetVulkanDevice(), _swapchain, &_swapchain_image_count, _swapchain_Image.data());
+
+	
+	for (int i = 0; i < _swapchain_image_count; i++) {
+		VkImageViewCreateInfo image_view_create_info{};
+		
+		image_view_create_info.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
+		image_view_create_info.pNext = nullptr;
+		image_view_create_info.flags = 0;
+		image_view_create_info.image = _swapchain_Image[i];
+		image_view_create_info.viewType = VK_IMAGE_VIEW_TYPE_2D;
+		image_view_create_info.format = VK_FORMAT_B8G8R8A8_UNORM;
+		image_view_create_info.components.r = VK_COMPONENT_SWIZZLE_IDENTITY;
+		image_view_create_info.components.g = VK_COMPONENT_SWIZZLE_IDENTITY;
+		image_view_create_info.components.b = VK_COMPONENT_SWIZZLE_IDENTITY;
+		image_view_create_info.components.a = VK_COMPONENT_SWIZZLE_IDENTITY;
+		image_view_create_info.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+		image_view_create_info.subresourceRange.baseMipLevel = 0;
+		image_view_create_info.subresourceRange.levelCount = 1;
+		image_view_create_info.subresourceRange.baseArrayLayer = 0;
+		image_view_create_info.subresourceRange.layerCount = 1;
+
+
+		vkCreateImageView(_renderer->GetVulkanDevice(), &image_view_create_info, nullptr, &_swapchain_image_view[i]);
+	}
+}
+
+void Window::_DeInitSwapchainImages()
+{
+	for (auto view : _swapchain_image_view) {
+		vkDestroyImageView(_renderer->GetVulkanDevice(),view,nullptr);
+	}
 }
