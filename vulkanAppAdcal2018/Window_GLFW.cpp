@@ -9,7 +9,7 @@
 void Window::_InitOSWindow() 
 {
 	glfwInit();
-	glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
+	glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
 	_GLFW_window = glfwCreateWindow(_surface_size_x,_surface_size_y, _window_name.c_str(),nullptr,nullptr);
 
 }
@@ -29,7 +29,11 @@ void Window::_UpdateOSWindow()
 
 void Window::_InitOSSurface()
 {
-	glfwCreateWindowSurface(_renderer->GetVulkanInstance(), _GLFW_window, nullptr, &_surface);
+	auto err = glfwCreateWindowSurface(_renderer->GetVulkanInstance(), _GLFW_window, nullptr, &_surface);
+	if (VK_SUCCESS != err) {
+		assert(0 && "Vulkan ERROR: Create swapchain failed!!");
+		std::exit(-1);
+	}
 }
 
 #endif

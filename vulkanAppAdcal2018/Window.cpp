@@ -13,14 +13,14 @@ Window::Window(Renderer * renderer, uint32_t size_x, uint32_t size_y, std::strin
 	_InitOSWindow();
 	_InitSurface();
 	_InitSwapchain();
-//	_InitSwapchainImages();
+	_InitSwapchainImages();
 }
 
 
 
 Window::~Window()
 {
-//	_DeInitSwapchainImages();
+	_DeInitSwapchainImages();
 	_DeInitSwapchain();
 	_DeInitSurface();
 	_DeInitOSWindow();
@@ -87,6 +87,7 @@ void Window::_InitSwapchain()
 
 	VkPresentModeKHR present_mode = VK_PRESENT_MODE_FIFO_KHR;
 	{
+		//プレゼンモードチェック
 		uint32_t present_mode_count;
 		vkGetPhysicalDeviceSurfacePresentModesKHR(_renderer->GetVulkanPhysicalDevice(),_surface, &present_mode_count, nullptr);
 		std::vector<VkPresentModeKHR>present_mode_list(present_mode_count);
@@ -96,6 +97,19 @@ void Window::_InitSwapchain()
 			std::cout << "support present mode: " << present_mode_list[i] << std::endl;
 		}
 		
+	}
+	
+	vkGetPhysicalDeviceSurfaceCapabilitiesKHR(_renderer->GetVulkanPhysicalDevice(), _surface, &_surface_capabilities);
+
+	//描写フォーマットチェック
+	uint32_t format_count = 0;
+	vkGetPhysicalDeviceSurfaceFormatsKHR(_renderer->GetVulkanPhysicalDevice(), _surface, &format_count, nullptr);
+	std::vector<VkSurfaceFormatKHR>formats(format_count);
+	vkGetPhysicalDeviceSurfaceFormatsKHR(_renderer->GetVulkanPhysicalDevice(), _surface, &format_count, formats.data());
+	std::cout << "DeviceSurfaceFormats: " << format_count << std::endl;
+	for (int i = 0; i < format_count; i++) {
+		std::cout << "Format: " << formats[i].format << std::endl;
+		std::cout << "ColorSpace: " << formats[i].colorSpace << std::endl;
 	}
 	
 
@@ -127,8 +141,11 @@ void Window::_InitSwapchain()
 	swapchain_create_info.clipped = VK_TRUE;
 	swapchain_create_info.oldSwapchain = VK_NULL_HANDLE;
 	
-	 vkCreateSwapchainKHR(_renderer->GetVulkanDevice(),&swapchain_create_info,nullptr,&_swapchain);
-
+	 auto err = vkCreateSwapchainKHR(_renderer->GetVulkanDevice(),&swapchain_create_info,nullptr,&_swapchain);
+	 if (VK_SUCCESS != err) {
+		 assert(0 && "Vulkan ERROR: Create swapchain failed!!");
+		 std::exit(-1);
+	 }
 	
 }
 
@@ -140,6 +157,9 @@ void Window::_DeInitSwapchain()
 
 void Window::_InitSwapchainImages()
 {
+
+	vkGetSwapchainImagesKHR(_renderer->GetVulkanDevice(), _swapchain, &_swapchain_image_count, nullptr);
+	
 	_swapchain_Image.resize(_swapchain_image_count);
 	_swapchain_image_view.resize(_swapchain_image_count);
 	vkGetSwapchainImagesKHR(_renderer->GetVulkanDevice(), _swapchain, &_swapchain_image_count, _swapchain_Image.data());

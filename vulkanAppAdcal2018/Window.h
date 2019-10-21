@@ -48,7 +48,7 @@ private:
 
 	std::vector<VkImage> _swapchain_Image;
 	std::vector<VkImageView> _swapchain_image_view;
-	
+
 	bool _window_should_run = true;
 
 #if VK_USE_PLATFORM_WIN32_KHR

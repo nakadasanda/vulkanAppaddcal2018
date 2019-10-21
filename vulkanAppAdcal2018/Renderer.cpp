@@ -3,6 +3,7 @@
 #include "Renderer.h"
 #include "Window.h"
 #include <iostream>
+#include <string>
 #include <cstdlib>
 #include <assert.h>
 #include <vector>
@@ -68,6 +69,7 @@ const VkPhysicalDeviceProperties & Renderer::GetVulkanPhysicalDeviceProperties()
 {
 	return VkPhysicalDeviceProperties();
 }
+
 void Renderer::_SetupLayersAndExtensions()
 {
 	_instance_layers.push_back("VK_LAYER_LUNARG_standard_validation");
@@ -86,7 +88,9 @@ void printDeviceStatus(VkPhysicalDevice &gpu) {
 	vkGetPhysicalDeviceProperties( gpu,&gpu_properties);
 	uint32_t apiVer = gpu_properties.apiVersion;
 
+	//GPU Propaty
 	std::cout << "gpu_Properties" << std::endl;
+	std::cout << "______________" << std::endl;
 	std::cout << std::endl;
 	std::cout << "Name:\t" << gpu_properties.deviceName << std::endl;
 	std::cout << "API Version:\t" << VK_VERSION_MAJOR(apiVer) << "." <<VK_VERSION_MINOR(apiVer) << "." <<VK_VERSION_PATCH(apiVer) << std::endl;
@@ -187,7 +191,9 @@ void Renderer::_InitInstance()
 	instance_create_info.enabledExtensionCount = _instance_extensions.size();
 	instance_create_info.ppEnabledExtensionNames = _instance_extensions.data();
 
+
 	auto err = vkCreateInstance(&instance_create_info, nullptr, &_instance);
+
 	if (VK_SUCCESS != err) {
 		assert(0 && "Vulkan ERROR: Create instance failed!!");
 		std::exit(-1);
