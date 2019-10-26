@@ -4,7 +4,9 @@
 #include <iostream>
 #include <string>
 
+
 class Window;
+class Shader;
 
 class Renderer
 {
@@ -13,6 +15,7 @@ public:
 	~Renderer();
 
 	Window * OpenWindow(uint32_t size_x,uint32_t size_y,std::string name);
+	Shader * CreateShder();
 
 	bool Run();
 
@@ -31,6 +34,8 @@ private:
 	void _InitDevise();
 	void _DeInitDevice();
 
+	
+
 	VkInstance	_instance = nullptr;
 	VkPhysicalDevice _gpu = nullptr;
 	VkDevice	_device = nullptr;
@@ -39,6 +44,7 @@ private:
 	uint32_t _graphics_family_index = 0;
 
 	Window *_window = nullptr;
+	Shader *_shader = nullptr;
 
 	std::vector<const char*>	_instance_layers;
 	std::vector<const char*>	_instance_extensions;

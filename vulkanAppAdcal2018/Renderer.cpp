@@ -2,6 +2,8 @@
 
 #include "Renderer.h"
 #include "Window.h"
+#include "Shader.h"
+
 #include <iostream>
 #include <string>
 #include <cstdlib>
@@ -29,6 +31,11 @@ Window * Renderer::OpenWindow(uint32_t size_x, uint32_t size_y, std::string name
 {
 	_window = new Window(this,size_x, size_y, name);
 	return _window;
+}
+
+Shader * Renderer::CreateShder() {
+	_shader = new Shader(this);
+	return _shader;
 }
 
 bool Renderer::Run()
@@ -251,3 +258,9 @@ void Renderer::_DeInitDevice()
 	_device = nullptr;
 
 }
+
+/*void Renderer::_CreateShder()
+{
+	_shader = new Shader();
+	return;
+}*/
