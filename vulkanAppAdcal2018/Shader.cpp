@@ -14,6 +14,16 @@ Shader::~Shader() {
 	vkDestroyShaderModule(_device, _shaderModuleFrag, nullptr);
 }
 
+const VkShaderModule Shader::GetVulkanVertShaderModule()
+{
+	return _shaderModuleVert;
+}
+
+const VkShaderModule Shader::GetVulkanFragShaderModule()
+{
+	return _shaderModuleFrag;
+}
+
 std::vector<char> Shader::ReadFile(const std::string& filename) {
 	std::ifstream file(filename, std::ios::ate | std::ios::binary);
 
@@ -49,7 +59,7 @@ void Shader::create_shaderModule(const std::vector<char>& code, VkShaderModule *
 	shaderCreateInfo.codeSize = code.size();
 	shaderCreateInfo.pCode = (uint32_t*)code.data();
 
-	auto err = vkCreateShaderModule(_device, &shaderCreateInfo, nullptr, shaderModule);
+	VkResult err = vkCreateShaderModule(_device, &shaderCreateInfo, nullptr, shaderModule);
 	if (VK_SUCCESS != err) {
 		assert(0 && "Vulkan ERROR: Create ShaderModule failed!!");
 		std::exit(-1);

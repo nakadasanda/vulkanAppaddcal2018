@@ -11,10 +11,12 @@ class Shader
 public:
 	Shader(Renderer * renderer);
 	~Shader();
-
+	const VkShaderModule GetVulkanVertShaderModule();
+	const VkShaderModule GetVulkanFragShaderModule();
 private:
 	void create_shaderModule(const std::vector<char>& code, VkShaderModule* shaderModule);
 	void _init_shaderModule();
+	
 	std::vector<char> ReadFile(const std::string& filename);
 	size_t GetfileSize(std::string filename);
 

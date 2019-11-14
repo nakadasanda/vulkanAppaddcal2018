@@ -3,7 +3,7 @@
 #include "Renderer.h"
 #include "Window.h"
 #include "Shader.h"
-
+#include "Pipeline.h"
 #include <iostream>
 #include <string>
 #include <cstdlib>
@@ -36,6 +36,12 @@ Window * Renderer::OpenWindow(uint32_t size_x, uint32_t size_y, std::string name
 Shader * Renderer::CreateShder() {
 	_shader = new Shader(this);
 	return _shader;
+}
+
+Pipeline* Renderer::CreatePipeline()
+{
+	_pipeline = new Pipeline(_shader, this);
+	return nullptr;
 }
 
 bool Renderer::Run()

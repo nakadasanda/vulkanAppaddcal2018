@@ -4,7 +4,7 @@
 #include <iostream>
 #include <string>
 
-
+class Pipeline;
 class Window;
 class Shader;
 
@@ -16,6 +16,7 @@ public:
 
 	Window * OpenWindow(uint32_t size_x,uint32_t size_y,std::string name);
 	Shader * CreateShder();
+	Pipeline* CreatePipeline();
 
 	bool Run();
 
@@ -45,10 +46,12 @@ private:
 
 	Window *_window = nullptr;
 	Shader *_shader = nullptr;
-
+	Pipeline* _pipeline = nullptr;
 	std::vector<const char*>	_instance_layers;
 	std::vector<const char*>	_instance_extensions;
 	std::vector<const char*>	_device_layers;
 	std::vector<const char*>	_device_extensions;
+
+
 };
 
