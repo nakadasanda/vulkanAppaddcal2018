@@ -9,6 +9,7 @@ public:
 private:
 	void CreateCommandPool();
 	VkCommandPool _commandPool;
+	std::vector<VkCommandBuffer> _commandbufers;
 	VkDevice _device;
 
 };
