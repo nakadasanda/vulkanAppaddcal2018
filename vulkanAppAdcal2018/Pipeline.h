@@ -10,6 +10,7 @@ class Pipeline
 public:
 	Pipeline(Shader* shader,Renderer* render);
 	~Pipeline();
+	const VkRenderPass GetrenderPass();
 private:
 	void CreatePipeline();
 	void DeCreatePipeline();

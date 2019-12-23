@@ -131,6 +131,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Command.cpp" />
+    <ClCompile Include="Framebuffer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Pipeline.cpp" />
     <ClCompile Include="Renderer.cpp" />
@@ -139,6 +141,8 @@
     <ClCompile Include="Window_GLFW.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Command.h" />
+    <ClInclude Include="Framebuffer.h" />
     <ClInclude Include="Pipeline.h" />
     <ClInclude Include="Platform.h" />
     <ClInclude Include="Renderer.h" />

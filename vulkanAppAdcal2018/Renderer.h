@@ -3,10 +3,13 @@
 #include <vector>
 #include <iostream>
 #include <string>
+#include <assert.h>
 
 class Pipeline;
 class Window;
 class Shader;
+class Command;
+class Framebuffer;
 
 class Renderer
 {
@@ -17,7 +20,8 @@ public:
 	Window * OpenWindow(uint32_t size_x,uint32_t size_y,std::string name);
 	Shader * CreateShder();
 	Pipeline* CreatePipeline();
-
+	Command* CreateCommand();
+	VkFramebuffer* CreateFramebuffer();
 	bool Run();
 
 	const VkInstance	GetVulkanInstance();
@@ -47,11 +51,13 @@ private:
 	Window *_window = nullptr;
 	Shader *_shader = nullptr;
 	Pipeline* _pipeline = nullptr;
+	Command* _command = nullptr;
+	Framebuffer* _framebuffer = nullptr;
 	std::vector<const char*>	_instance_layers;
 	std::vector<const char*>	_instance_extensions;
 	std::vector<const char*>	_device_layers;
 	std::vector<const char*>	_device_extensions;
-
+	
 
 };
 

@@ -27,6 +27,11 @@ Window::~Window()
 
 }
 
+std::vector<VkImageView> Window::GetImageview()
+{
+	return _swapchain_image_view;
+}
+
 void Window::Close()
 {
 	_window_should_run = false;

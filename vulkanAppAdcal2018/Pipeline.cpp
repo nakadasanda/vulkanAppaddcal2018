@@ -16,6 +16,11 @@ Pipeline::~Pipeline()
 	DeCreatePipeline();
 }
 
+const VkRenderPass Pipeline::GetrenderPass()
+{
+	return _renderPass;
+}
+
 void Pipeline::CreatePipeline()
 {
 	VkPipelineShaderStageCreateInfo shaderStageCreateInfoVert;
@@ -216,6 +221,4 @@ void Pipeline::DeCreatePipeline()
 	vkDestroyPipeline(_device, _pipeline, nullptr);
 	vkDestroyRenderPass(_device, _renderPass, nullptr);
 	vkDestroyPipelineLayout(_device, _pipelineLayout, nullptr);
-	
-
 }

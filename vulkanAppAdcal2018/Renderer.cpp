@@ -4,6 +4,8 @@
 #include "Window.h"
 #include "Shader.h"
 #include "Pipeline.h"
+#include "Command.h"
+#include "Framebuffer.h"
 #include <iostream>
 #include <string>
 #include <cstdlib>
@@ -43,6 +45,20 @@ Pipeline* Renderer::CreatePipeline()
 	_pipeline = new Pipeline(_shader, this);
 	return nullptr;
 }
+
+Command* Renderer::CreateCommand()
+{
+	_command = new Command(this);
+	return _command;
+}
+
+VkFramebuffer* Renderer::CreateFramebuffer()
+{
+	_framebuffer = new Framebuffer(_pipeline, this,_window);
+	return nullptr;
+}
+
+
 
 bool Renderer::Run()
 {

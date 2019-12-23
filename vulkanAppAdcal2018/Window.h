@@ -11,6 +11,7 @@ class Window
 public:
 	Window(Renderer * renderer, uint32_t size_x, uint32_t size_y, std::string name);
 	~Window();
+	std::vector<VkImageView> GetImageview();
 
 	void Close();
 	bool Update();
